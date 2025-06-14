@@ -13,7 +13,7 @@ public class TimeControlTrigger : MonoBehaviour
         TimeScaleHandler obj = collision.gameObject.GetComponent<TimeScaleHandler>();
         if (obj != null)
         {
-            obj.LocalTimeScale *= timeFactor;
+            obj.ModifyTime(timeFactor, TimeScaleMode.MODIFY);
         }
     }
 
@@ -22,7 +22,7 @@ public class TimeControlTrigger : MonoBehaviour
         TimeScaleHandler obj = collision.gameObject.GetComponent<TimeScaleHandler>();
         if (obj != null)
         {
-            obj.LocalTimeScale /= timeFactor;
+            obj.ModifyTime(timeFactor, TimeScaleMode.UNDO);
         }
     }
 }

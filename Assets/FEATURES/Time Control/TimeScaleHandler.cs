@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TimeScaleMode { MODIFY, UNDO }
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class TimeScaleHandler : MonoBehaviour
 {
-    public float LocalTimeScale = 1f;
+    private float LocalTimeScale = 1f;
 
     Rigidbody2D rb;
     Vector2 pendingVelocity;
@@ -15,14 +17,39 @@ public class TimeScaleHandler : MonoBehaviour
 
     public float baseDrag = 0f;
     public float baseAngularDrag = 0.05f;
-    public Vector2 customGravity = new Vector2(0, -9.81f); // match your project settings
+    public Vector2 customGravity = new Vector2(0, -9.81f);
 
     void Awake() => rb = GetComponent<Rigidbody2D>();
 
     public void SetDesiredVelocity(Vector2 vel) => pendingVelocity = vel;
     public void SetDesiredAngularVel(float aVel) => pendingAngularVelocity = aVel;
-    public void QueueJump(float impulse) { jumpQueued = true; jumpImpulse = impulse; }
-
+    public void QueueJump(float impulse) 
+    {
+        jumpQueued = true;
+        jumpImpulse = impulse;
+    }
+    public void ModifyTime(float factor, TimeScaleMode mode = TimeScaleMode.MODIFY)
+    {
+        Vector2 vel = rb.velocity;
+        if (mode == TimeScaleMode.MODIFY)
+        {
+            vel.y *= factor;
+            LocalTimeScale *= factor;
+        }
+        else
+        {
+            vel.y /= factor;
+            LocalTimeScale /= factor;
+        }
+        rb.velocity = vel;
+    }
+    public void ResetTime()
+    {
+        Vector2 vel = rb.velocity;
+        vel /= LocalTimeScale;
+        LocalTimeScale = 1f;
+        rb.velocity = vel;
+    }
 
     void FixedUpdate()
     {
@@ -45,12 +72,16 @@ public class TimeScaleHandler : MonoBehaviour
             return;
         }
 
-        rb.velocity = pendingVelocity * s;
+        // only scale X, y is handled below
+        Vector2 vel = rb.velocity;       
+        vel.x = pendingVelocity.x * s;   
+        rb.velocity = vel;
+
         rb.angularVelocity = pendingAngularVelocity * s;
 
         // Apply scaled gravity manually
         rb.gravityScale = 0f; // disable built-in gravity
-        rb.AddForce(customGravity * s, ForceMode2D.Force);
+        rb.AddForce(customGravity * s * s, ForceMode2D.Force);
 
         if (jumpQueued)
         {
