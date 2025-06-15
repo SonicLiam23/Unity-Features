@@ -38,24 +38,29 @@ class JumpState : IMovementState
                 // one of the prerequisites of IMovementState.Jump() being ran is this, so this "cuts it off at the source"
                 stateController.canJump = false;
 
-
-            DisableGroundCheckFor(0.2f);
+            // this is so it doesnt immediatley set back to "grounded" for the short time the foot trigger is on the floor still
+            DisableGroundCheckFor();
             stateController.timeScaleHandler.QueueJump(stateController.JumpForce);
         }
     }
     public void UpdateState()
     {
         Move();
-        if (rb.velocity.y <= 0)
+        // I use ignoreGrounded because, depending on update order, this runs before the velocity is applied, so I need to "wait" until jump is actually being performed
+        if (rb.velocity.y < 0 && !stateController.ignoreGrounded)
         {
             stateController.ChangeState(typeof(FallingState));
         }
     }
 
-    private IEnumerator DisableGroundCheckFor(float duration)
+    private IEnumerator DisableGroundCheckFor()
     {
         stateController.ignoreGrounded = true;
-        yield return new WaitForSeconds(duration);
+        // only set it back AFTER the foot trigger has left the ground
+        while (stateController.foot.IsGrounded)
+        {
+            yield return null;
+        }
         stateController.ignoreGrounded = false;
     }
 }

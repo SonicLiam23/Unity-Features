@@ -10,11 +10,14 @@ public class MovementStateMachineController : StateMachineBase<IMovementState, M
     [HideInInspector] public float velocityMult;
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public Vector2 velocity; 
+    /// <summary>
+    /// When true, player is always seen as in air. Used to prevent false positives on this "IsGrounded" when jumping.
+    /// </summary>
     [HideInInspector] public bool ignoreGrounded = false;
     [HideInInspector] public int jumpsLeft;
     [HideInInspector] public TimeScaleHandler timeScaleHandler;
 
-    [SerializeField] private FootTrigger foot;
+    [SerializeField] public FootTrigger foot;
     public bool IsGrounded
     { 
         // if igoreGrounded is true, the player will ALWAYS be seen as off the ground
@@ -56,7 +59,6 @@ public class MovementStateMachineController : StateMachineBase<IMovementState, M
     protected override void Update()
     {
         Debug.Log(CurrentState.GetType());
-        Debug.Log("Is on ground: " + IsGrounded);
         base.Update(); 
     }
 }

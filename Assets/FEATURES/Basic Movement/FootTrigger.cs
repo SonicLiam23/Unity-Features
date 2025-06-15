@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class FootTrigger : MonoBehaviour
 {
-    public bool IsGrounded { get; private set; }
+    public bool IsGrounded {  get; private set; } 
 
     private void Awake()
     {
