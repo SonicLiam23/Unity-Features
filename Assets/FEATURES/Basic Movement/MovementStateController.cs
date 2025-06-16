@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+
+
 [RequireComponent(typeof(TimeScaleHandler))]
 public class MovementStateMachineController : StateMachineBase<IMovementState, MovementStateMachineController>
 {
@@ -61,6 +63,17 @@ public class MovementStateMachineController : StateMachineBase<IMovementState, M
         Debug.Log(CurrentState.GetType());
         base.Update(); 
     }
+
+    public IEnumerator DisableGroundCheck()
+    {
+        // only set it back AFTER the foot trigger has left the ground
+        ignoreGrounded = true;
+        while (foot.IsGrounded)
+        {
+            yield return null;
+        }
+        ignoreGrounded = false;
+    }
 }
 
 
@@ -69,3 +82,5 @@ public interface IMovementState : IState
     public void Move();
     public void Jump();
 }
+
+

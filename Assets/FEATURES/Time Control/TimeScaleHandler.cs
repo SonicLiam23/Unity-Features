@@ -63,6 +63,8 @@ public class TimeScaleHandler : MonoBehaviour
 
             if (jumpQueued)
             {
+                pendingVelocity.y = 0f;
+                rb.velocity = pendingVelocity;
                 rb.AddForce(Vector2.up * jumpImpulse, ForceMode2D.Impulse);
                 jumpQueued = false;
             }
@@ -85,6 +87,8 @@ public class TimeScaleHandler : MonoBehaviour
 
         if (jumpQueued)
         {
+            pendingVelocity.y = 0f;
+            rb.velocity = pendingVelocity;
             rb.AddForce(Vector2.up * jumpImpulse * s, ForceMode2D.Impulse);
             jumpQueued = false;
         }
