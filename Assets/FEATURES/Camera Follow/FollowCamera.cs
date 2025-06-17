@@ -6,6 +6,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class FollowCamera : MonoBehaviour
 {
+
+    [SerializeField] List<ScriptableObject> cameraPresets; 
+
     Camera cam;
     private Vector3 velocity = Vector3.zero;
 
@@ -109,3 +112,4 @@ public class FollowCamera : MonoBehaviour
     }
     #endregion
 }
+

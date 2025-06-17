@@ -1,7 +1,7 @@
 {
     "player_dialogue_test" :
     {
-        "text": "Hello i am a test",
+        "text": "Hello I love you <3",
         "options": [
             {"text" : "Yes", "next" : "test_yes"},
             {"text" : "no", "next" : "test_no"}

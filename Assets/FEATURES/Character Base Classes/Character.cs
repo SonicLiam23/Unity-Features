@@ -3,47 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.InputSystem;
+using System;
 
-[RequireComponent(typeof(Rigidbody2D))]
+
+/// <summary>
+/// A character entity, includes movement.
+/// </summary>
 [RequireComponent(typeof(MovementStateMachineController))]
-[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(HealthComponent))]
-public class Character : MonoBehaviour
+public class Character : Entity
 {
-    protected MovementStateMachineController movementController;
-    protected Rigidbody2D rb;
-    protected DialogueComponent dialogueComponent;
-    protected void Awake()
+    public MovementStateMachineController MovementController { get; protected set; }
+    
+    protected override void Awake()
     {
-        movementController = GetComponent<MovementStateMachineController>();
-        rb = GetComponent<Rigidbody2D>();
-        dialogueComponent = GetComponentInChildren<DialogueComponent>();
+        base.Awake();
+        MovementController = GetComponent<MovementStateMachineController>();
 
-        if (dialogueComponent == null)
-            Debug.LogWarning($"DialogueComponent not found in {gameObject.name}. Dialogue on this object will not be shown.\nIf you did mean to add it, ensure it is attatched to a child of {gameObject.name}.");
     }
 
-
-    public void Move(InputAction.CallbackContext context)
+    public virtual void Move(Vector2 newVelocity)
     {
-        if (context.performed)
-        {
-            movementController.velocityMult = context.ReadValue<float>();
-        }
-        if (context.canceled)
-        {
-            movementController.velocityMult = 0f;
-        }
+        RigidBodyComp.velocity = newVelocity;
     }
 
-    public void Jump(InputAction.CallbackContext context)
+    public virtual void MoveTo(Transform destination)
     {
-        if (context.started && movementController.canJump)
-        {
-            StartCoroutine(movementController.DisableGroundCheck());
-            movementController.CurrentState.Jump();
-        }
+        throw new NotImplementedException();
     }
 
-
+    public virtual void MoveTo(Vector2 destination)
+    {
+        throw new NotImplementedException();
+    }
 }
