@@ -10,15 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa6b8f37aa4ca9459c987f2b4d5135b, type: 3}
-  m_Name: NewCameraPreset
+  m_Name: Exploring
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  followSmoothTime: 0.3
-  lookAheadDist: 2
-  lookAheadReturnSpeed: 4
+  offset: {x: 0, y: 3, z: 0}
+  followSmoothTime: 0.1
+  lookAheadDist: 100
+  lookAheadReturnSpeed: 40
   verticalDeadzone: 0.75
-  levelMin: {x: 0, y: 0}
-  levelMax: {x: 0, y: 0}
   shakeDuration: 0.15
   shakeStrength: 0.3

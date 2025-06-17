@@ -6,8 +6,6 @@ using UnityEngine;
 public class CameraPreset : ScriptableObject
 {
     [Header("Core")]
-    public string presetName;
-    public Transform target;
     public Vector3 offset;
 
     [Header("Follow")]
@@ -19,10 +17,6 @@ public class CameraPreset : ScriptableObject
 
     [Header("Vertical Deadzone")]
     public float verticalDeadzone = 0.75f; // in world units
-
-    [Header("Bounds (unset = no clamping")]
-    public Vector2 levelMin;
-    public Vector2 levelMax;
 
     [Header("Shake")]
     public float shakeDuration = 0.15f;

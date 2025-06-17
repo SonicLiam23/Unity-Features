@@ -1,55 +1,52 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
 public class FollowCamera : MonoBehaviour
 {
-
-    [SerializeField] List<ScriptableObject> cameraPresets; 
+    [Header("Default preset will be the one placed at the top.")]
+    [SerializeField] List<CameraPreset> cameraPresets; 
 
     Camera cam;
     private Vector3 velocity = Vector3.zero;
 
     [Header("Core")]
-    [SerializeField] private Transform target;
-    [SerializeField] private Vector3 offset;
+    public Transform TargetObject;
+    private Vector3 offset;
 
     [Header("Follow")]
-    [SerializeField] private float followSmoothTime = 0.3f; // Lower = faster response
+    private float followSmoothTime = 0.3f; // Lower = faster response
 
     [Header("Look Ahead")]
-    [SerializeField] private float lookAheadDist = 2f;
-    [SerializeField] float lookAheadReturnSpeed = 4f;  // Higher = snappier
+    private float lookAheadDist = 2f;
+    float lookAheadReturnSpeed = 4f;  // Higher = snappier
     Vector3 currentLookAhead;
     float targetLastX;
 
     [Header("Vertical Deadzone")]
-    [SerializeField] float verticalDeadzone = 0.75f; // in world units
+    float verticalDeadzone = 0.75f; // in world units
 
     [Header("Bounds (unset = no clamping")]
-    [SerializeField] Vector2 levelMin;
-    [SerializeField] Vector2 levelMax;
+    Vector2 levelMin;
+    Vector2 levelMax;
 
     [Header("Shake")]
-    [SerializeField] float shakeDuration = 0.15f;
-    [SerializeField] float shakeStrength = 0.3f;
+    float shakeDuration = 0.15f;
+    float shakeStrength = 0.3f;
     float shakeTimer;
-
-
 
     private void Awake()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        targetLastX = target.position.x;
+        TargetObject = GameObject.FindGameObjectWithTag("Player").transform;
+        targetLastX = TargetObject.position.x;
         cam = GetComponent<Camera>();
+        ChangePreset(cameraPresets[0].name);
     }
 
     void LateUpdate()
     {
         // Look-Ahead
-        float deltaX = target.position.x - targetLastX;
+        float deltaX = TargetObject.position.x - targetLastX;
         bool isMovingHorizontally = Mathf.Abs(deltaX) > 0.01f;
 
         if (isMovingHorizontally)
@@ -60,14 +57,14 @@ public class FollowCamera : MonoBehaviour
         {
             currentLookAhead.x = Mathf.Lerp(currentLookAhead.x, 0f, Time.deltaTime * lookAheadReturnSpeed);
         }
-        targetLastX = target.position.x + offset.x;
+        targetLastX = TargetObject.position.x + offset.x;
 
         // vertical Deadzone
-        float deltaY = target.position.y - transform.position.y;
+        float deltaY = TargetObject.position.y - transform.position.y;
         float yOffset = (Mathf.Abs(deltaY) > verticalDeadzone ? deltaY - Mathf.Sign(deltaY) * verticalDeadzone : 0f) + offset.y;
 
         // Calc desired position
-        Vector3 desiredPos = new Vector3(target.position.x, transform.position.y + yOffset, transform.position.z) + currentLookAhead;
+        Vector3 desiredPos = new Vector3(TargetObject.position.x, transform.position.y + yOffset, transform.position.z) + currentLookAhead;
 
         // smooth follow
         Vector3 smoothed = Vector3.SmoothDamp(transform.position, desiredPos, ref velocity, followSmoothTime);
@@ -101,14 +98,32 @@ public class FollowCamera : MonoBehaviour
             followSmoothTime = newSmoothTime;
         }
 
-        target = newTarget;
-        targetLastX = target.position.x;
+        TargetObject = newTarget;
+        targetLastX = TargetObject.position.x;
     }
     public void TriggerShake(float magnitude = -1f, float duration = -1f)
     {
         shakeStrength = magnitude > 0f ? magnitude : shakeStrength;
         shakeDuration = duration > 0f ? duration : shakeDuration;
         shakeTimer = shakeDuration;
+    }
+
+    public void ChangePreset(string name)
+    {
+        foreach (CameraPreset preset in cameraPresets)
+        {
+            if (preset.name == name)
+            {
+                offset = preset.offset;
+                followSmoothTime = preset.followSmoothTime;
+                lookAheadDist = preset.lookAheadDist;
+                lookAheadReturnSpeed = preset.lookAheadReturnSpeed;
+                verticalDeadzone = preset.verticalDeadzone;
+                shakeDuration = preset.shakeDuration;
+                shakeStrength = preset.shakeStrength;
+                return;
+            }
+        }
     }
     #endregion
 }
