@@ -51,6 +51,4 @@ class JumpState : IMovementState
              stateController.ChangeState(typeof(FallingState));
         }
     }
-    
-
 }

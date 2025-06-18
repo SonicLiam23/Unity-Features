@@ -20,7 +20,7 @@
                     "id": "d71deb6f-2031-4b23-8016-f4fc5a87e680",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": true
                 }
             ],
@@ -106,17 +106,6 @@
                     "name": "",
                     "id": "046ca199-ac47-42e4-9b0a-05422502117f",
                     "path": "<Joystick>/trigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "04ae9063-3822-4a21-a5e4-b45bc6a755b0",
-                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -35,7 +35,7 @@ public class Player : Character
     }
 
     public void Jump(InputAction.CallbackContext context)
-    {
+     {
         if (context.started && MovementController.canJump)
         {
             StartCoroutine(MovementController.DisableGroundCheck());

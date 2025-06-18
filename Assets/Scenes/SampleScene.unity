@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb956150e019f24eb5c8b2ea9ae85cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeFactor: 2
+  timeFactor: 0.5
 --- !u!58 &1379802603
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1362,7 +1362,7 @@ GameObject:
   - component: {fileID: 1670493505}
   - component: {fileID: 1670493504}
   - component: {fileID: 1670493503}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1842,8 +1842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDrag: 0
-  baseAngularDrag: 0.05
-  customGravity: {x: 0, y: -9.81}
+  baseAngularDrag: 0
 --- !u!50 &2069229524
 Rigidbody2D:
   serializedVersion: 4
@@ -1858,7 +1857,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1880,7 +1879,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 2069229518}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 92222fe496a333a409bd62c247964c84, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

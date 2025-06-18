@@ -21,9 +21,9 @@ public class MovementStateMachineController : StateMachineBase<IMovementState, M
 
     [SerializeField] public FootTrigger foot;
     public bool IsGrounded
-    { 
-        // if igoreGrounded is true, the player will ALWAYS be seen as off the ground
-        get => (foot.IsGrounded && !ignoreGrounded); 
+    {
+
+        get => (foot.IsGrounded);
     }
     public float JumpForce = 100f;
     public float maxSpeed = 10f;
@@ -70,9 +70,11 @@ public class MovementStateMachineController : StateMachineBase<IMovementState, M
         ignoreGrounded = true;
         while (foot.IsGrounded)
         {
+            Debug.Log("Ground Disabled!");
             yield return null;
         }
         ignoreGrounded = false;
+        
     }
 }
 
