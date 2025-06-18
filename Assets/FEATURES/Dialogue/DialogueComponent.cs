@@ -10,6 +10,7 @@ public class DialogueComponent : MonoBehaviour
 {
     private TextMeshProUGUI TMP;
     private TextEffect textEffect;
+    [SerializeField] private string dialogueID;
 
     [SerializeField] private List<string> entryTextAnimTags;
     [SerializeField] private List<string> exitTextAnimTags;
@@ -24,17 +25,26 @@ public class DialogueComponent : MonoBehaviour
         textEffect = GetComponent<TextEffect>();
     }
 
+    public void ChangeID(string ID)
+    {
+        dialogueID = ID;
+    }
 
-    public void ShowDialogue(string ID)
+
+    /// <summary>
+    /// shows the dialogue from the ID stored on this object.
+    /// </summary>
+    public void ShowDialogue()
     {
         // clear any previous dialogue
         Clear();
 
-        DialogueEntry entry = DialogueManager.GetDialogue(ID);
-        string text = (entry==null) ? ID : entry.text;
+        DialogueEntry entry = DialogueManager.GetDialogue(dialogueID);
+        string text = (entry==null) ? dialogueID + " not found" : entry.text;
 
         TMP.text = text;
 
+        // still need to finish
         if (optionsContainer != null && entry.options != null)
         {
             foreach (var option in entry.options)
@@ -45,6 +55,7 @@ public class DialogueComponent : MonoBehaviour
         }
         TMP.enabled = true;
         textEffect.enabled = true;
+
     }
     
     public void HideDialogue()

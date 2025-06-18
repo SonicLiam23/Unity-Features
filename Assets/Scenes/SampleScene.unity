@@ -536,7 +536,6 @@ GameObject:
   - component: {fileID: 427529577}
   - component: {fileID: 427529576}
   - component: {fileID: 427529575}
-  - component: {fileID: 427529579}
   - component: {fileID: 427529578}
   m_Layer: 7
   m_Name: Dialogue
@@ -576,6 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d6d85303fe26746bd7d4918beb1c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueID: player_dialogue_test
   entryTextAnimTags: []
   exitTextAnimTags: []
   optionsContainer: {fileID: 0}
@@ -719,19 +719,6 @@ MonoBehaviour:
           m_CallState: 2
     overrideTagEffects: 0
   updatesPerSecond: 30
---- !u!114 &427529579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427529573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a807c3d702f25e44ba78bdc636ccf5e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1557,6 +1544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d6d85303fe26746bd7d4918beb1c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueID: 
   entryTextAnimTags: []
   exitTextAnimTags: []
   optionsContainer: {fileID: 0}

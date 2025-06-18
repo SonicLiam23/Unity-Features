@@ -19,10 +19,6 @@ public class TimeScaleHandler : MonoBehaviour
     public float baseDrag = 0f;
     public float baseAngularDrag = 0f;
 
-
-    // tESTING
-    float prevVelocityY = 0f;
-
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -64,12 +60,6 @@ public class TimeScaleHandler : MonoBehaviour
         Vector2 vel = rb.velocity;
         vel = rb.velocity;
 
-        if (Mathf.Abs(rb.velocity.y) < 0.01f && rb.velocity.y > prevVelocityY)
-        {
-            Debug.Log("Peak Y: " + transform.position.y);
-        }
-        prevVelocityY = rb.velocity.y;
-
         // skip vector calculations if LocalTimeScale is 1, for performance 
         if (Mathf.Approximately(s, 1f))
         {
@@ -84,7 +74,6 @@ public class TimeScaleHandler : MonoBehaviour
                 vel.y = jumpImpulse;
                 jumpQueued = false;
 
-                prevVelocityY = 0f;
             }
 
             rb.drag = baseDrag;
@@ -103,8 +92,6 @@ public class TimeScaleHandler : MonoBehaviour
         {
             vel.y = jumpImpulse * s;
             jumpQueued = false;
-
-            prevVelocityY = 0f;
         }
 
         rb.drag = baseDrag * s * s;

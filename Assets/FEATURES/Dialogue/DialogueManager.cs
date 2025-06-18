@@ -41,6 +41,7 @@ public class DialogueManager : MonoBehaviour
 public class DialogueEntry
 {
     public string text;
+    public bool setDefault;
     public List<DialogueOption> options;
 }
 
