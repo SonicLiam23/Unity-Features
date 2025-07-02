@@ -7,10 +7,11 @@ using System;
 
 
 /// <summary>
-/// A character entity, includes movement.
+/// A character entity, includes movement, dialogue and health.
 /// </summary>
 [RequireComponent(typeof(MovementStateMachineController))]
 [RequireComponent(typeof(HealthComponent))]
+[RequireComponent(typeof(DialogueTrigger))]
 public class Character : Entity
 {
     public MovementStateMachineController MovementController { get; protected set; }

@@ -2,9 +2,24 @@
     "player_dialogue_test" :
     {
         "text": "Hello I love you <3",
+        "setDefault" : false,
         "options": [
             {"text" : "Yes", "next" : "test_yes"},
-            {"text" : "no", "next" : "test_no"}
+            {"text" : "No", "next" : "test_no"}
         ]
+    },
+
+    "test_yes" :
+    {
+        "text" : "<3",
+        "setDefault" : true,
+        "options": []
+    },
+
+    "test_no" :
+    {
+        "text" : "</3",
+        "setDefault" : true,
+        "options" : []
     }
 }

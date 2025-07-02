@@ -11,19 +11,33 @@ public class DialogueComponent : MonoBehaviour
     private TextMeshProUGUI TMP;
     private TextEffect textEffect;
     [SerializeField] private string dialogueID;
-
-    [SerializeField] private List<string> entryTextAnimTags;
-    [SerializeField] private List<string> exitTextAnimTags;
-
+ 
     [Header("Dialogue Options (leave empty for none)")]
-    [SerializeField] private GameObject optionsContainer;
     [SerializeField] private GameObject optionButtonPrefab;
+    List<GameObject> options;
+
+    string text;
+    DialogueEntry currentEntry;
 
     private void Awake()
     {
         TMP = GetComponent<TextMeshProUGUI>();
         textEffect = GetComponent<TextEffect>();
+        options = new();
     }
+
+    private void Start()
+    {
+        if (!string.IsNullOrEmpty(dialogueID))
+        {
+            currentEntry = DialogueManager.GetDialogue(dialogueID);
+            text = (currentEntry == null) ? dialogueID + " not found" : currentEntry.text;
+            TMP.text = text;
+            TMP.enabled = false;
+            textEffect.enabled = false;
+        }
+    }
+
 
     public void ChangeID(string ID)
     {
@@ -34,23 +48,25 @@ public class DialogueComponent : MonoBehaviour
     /// <summary>
     /// shows the dialogue from the ID stored on this object.
     /// </summary>
-    public void ShowDialogue()
+    public void ShowDialogue(string newID = "")
     {
-        // clear any previous dialogue
-        Clear();
-
-        DialogueEntry entry = DialogueManager.GetDialogue(dialogueID);
-        string text = (entry==null) ? dialogueID + " not found" : entry.text;
-
-        TMP.text = text;
-
-        // still need to finish
-        if (optionsContainer != null && entry.options != null)
+        if (!string.IsNullOrEmpty(newID) && newID != dialogueID)
         {
-            foreach (var option in entry.options)
-            {
-                GameObject buttonObject = Instantiate(optionButtonPrefab, optionsContainer.transform);
+            Clear();
+            dialogueID = newID;
+            currentEntry = DialogueManager.GetDialogue(dialogueID);
+            text = (currentEntry == null) ? dialogueID + " not found" : currentEntry.text;
+            TMP.text = text;
+        }        
 
+        if (currentEntry.options != null && optionButtonPrefab != null)
+        {
+            foreach (var option in currentEntry.options)
+            {
+                GameObject buttonObject = Instantiate(optionButtonPrefab, transform.parent);
+                DialogueOptionButton button = buttonObject.GetComponent<DialogueOptionButton>();
+                button.Init(option, this);
+                options.Add(buttonObject);
             }
         }
         TMP.enabled = true;
@@ -58,6 +74,9 @@ public class DialogueComponent : MonoBehaviour
 
     }
     
+    /// <summary>
+    /// Use this to run any exit effects then clear.
+    /// </summary>
     public void HideDialogue()
     {
         if (textEffect == null)
@@ -67,18 +86,22 @@ public class DialogueComponent : MonoBehaviour
         }
 
         textEffect.StartManualEffects();
-
     }
 
+    
+
+    /// <summary>
+    /// Use this to immediatley cut the dialogue. No effects.
+    /// </summary>
     public void Clear()
     {
-        TMP.text = "";
-        if (optionsContainer != null)
+        if (optionButtonPrefab != null)
         {
-            foreach (GameObject option in optionsContainer.transform)
+            foreach (GameObject option in options)
             {
-                Destroy(option.gameObject);
+                Destroy(option);
             }
+            options.Clear();
         }
         TMP.enabled = false;
         textEffect.enabled = false;

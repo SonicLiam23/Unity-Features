@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]  
 public class DialogueTrigger : MonoBehaviour
 {
-    [Tooltip("Can safely leave blank if Entity is attached, it will find it automatically")]
-    [SerializeField] DialogueComponent dialogue;
+    DialogueComponent dialogue;
     
 
     private void Awake()
     {
+        dialogue = GetComponentInChildren<DialogueComponent>();
         if (dialogue == null)
         {
-            dialogue = GetComponent<Entity>().DialogueComp;
+            Debug.LogWarning($"DialogueComponent not found in {gameObject.name}. Dialogue on this object will not be shown.\nIf you did mean to add it, ensure it is attatched to a child of {gameObject.name}.");
+            this.enabled = false;
         }
     }
 
