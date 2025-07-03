@@ -5,10 +5,17 @@ using TMPro;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
+// This needs revising. The instantiation, deletion and getcomponent calls are generally inefficient. But as im dealing with maybe 1 or 2 dialogues at once, the impact is hopefully negligible.
+// Will 100% come back to this as this project develops.
+
+
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class DialogueComponent : MonoBehaviour
 {
     private TextMeshProUGUI TMP;
+    /// <summary>
+    /// Stores a reference to all the text effects (for this and the options)
+    /// </summary>
     private TextEffect textEffect;
     [SerializeField] private string dialogueID;
  
@@ -52,7 +59,7 @@ public class DialogueComponent : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(newID) && newID != dialogueID)
         {
-            Clear();
+            ClearDialogue();
             dialogueID = newID;
             currentEntry = DialogueManager.GetDialogue(dialogueID);
             text = (currentEntry == null) ? dialogueID + " not found" : currentEntry.text;
@@ -64,8 +71,7 @@ public class DialogueComponent : MonoBehaviour
             foreach (var option in currentEntry.options)
             {
                 GameObject buttonObject = Instantiate(optionButtonPrefab, transform.parent);
-                DialogueOptionButton button = buttonObject.GetComponent<DialogueOptionButton>();
-                button.Init(option, this);
+                buttonObject.GetComponent<DialogueOptionButton>().Init(option, this);
                 options.Add(buttonObject);
             }
         }
@@ -81,11 +87,15 @@ public class DialogueComponent : MonoBehaviour
     {
         if (textEffect == null)
         {
-            Clear();
+            ClearDialogue();
             return;
         }
 
         textEffect.StartManualEffects();
+        foreach (var option in options)
+        {
+            option.GetComponentInChildren<TextEffect>().StartManualEffects();
+        }
     }
 
     
@@ -93,16 +103,14 @@ public class DialogueComponent : MonoBehaviour
     /// <summary>
     /// Use this to immediatley cut the dialogue. No effects.
     /// </summary>
-    public void Clear()
+    public void ClearDialogue()
     {
-        if (optionButtonPrefab != null)
+
+        foreach (GameObject option in options)
         {
-            foreach (GameObject option in options)
-            {
-                Destroy(option);
-            }
-            options.Clear();
+            Destroy(option);
         }
+        options.Clear();
         TMP.enabled = false;
         textEffect.enabled = false;
     }

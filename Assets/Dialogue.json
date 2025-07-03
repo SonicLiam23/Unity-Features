@@ -13,13 +13,17 @@
     {
         "text" : "<3",
         "setDefault" : true,
-        "options": []
+        "options": [
+            {"text" : "Restart", "next" : "player_dialogue_test"}
+        ]
     },
 
     "test_no" :
     {
         "text" : "</3",
         "setDefault" : true,
-        "options" : []
+        "options" : [
+            {"text" : "Restart", "next" : "player_dialogue_test"}
+        ]
     }
 }

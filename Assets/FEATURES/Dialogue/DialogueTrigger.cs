@@ -13,7 +13,7 @@ public class DialogueTrigger : MonoBehaviour
         dialogue = GetComponentInChildren<DialogueComponent>();
         if (dialogue == null)
         {
-            Debug.LogWarning($"DialogueComponent not found in {gameObject.name}. Dialogue on this object will not be shown.\nIf you did mean to add it, ensure it is attatched to a child of {gameObject.name}.");
+            Debug.LogWarning($"DialogueComponent not found in {gameObject.name}. Dialogue on this object will not be shown.\nIf you did mean to add it, ensure it is attatched to [a child of] {gameObject.name}.");
             this.enabled = false;
         }
     }
