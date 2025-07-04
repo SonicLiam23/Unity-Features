@@ -9,14 +9,17 @@ public class CameraPreset : ScriptableObject
     public Vector3 offset;
 
     [Header("Follow")]
-    public float followSmoothTime = 0.3f; // Lower = faster response
+    [Tooltip("Lower = faster response")]
+    public float followSmoothTime = 0.3f;
 
     [Header("Look Ahead")]
+    [Tooltip("Higher = snappier")]
     public float lookAheadDist = 2f;
-    public float lookAheadReturnSpeed = 4f;  // Higher = snappier
+    public float lookAheadReturnSpeed = 4f;
 
     [Header("Vertical Deadzone")]
-    public float verticalDeadzone = 0.75f; // in world units
+    [Tooltip("In world units")]
+    public float verticalDeadzone = 0.75f;
 
     [Header("Shake")]
     public float shakeDuration = 0.15f;

@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @InputActions: IInputActionCollection2, IDisposable
+public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @InputActions()
+    public @PlayerInputActions()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""InputActions"",
@@ -42,8 +42,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""id"": ""d71deb6f-2031-4b23-8016-f4fc5a87e680"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -93,6 +93,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9a178707-44b1-4251-a8fe-0e59af5c33e1"",
+                    ""path"": ""<Joystick>/stick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a66f3998-bb84-40d1-a9a7-b654ac59f1ca"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -106,6 +117,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""1cb35e7c-8563-4e8d-80d2-c0278eb665c4"",
                     ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""046ca199-ac47-42e4-9b0a-05422502117f"",
+                    ""path"": ""<Joystick>/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -187,8 +209,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     public struct PlayerActions
     {
-        private @InputActions m_Wrapper;
-        public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        private @PlayerInputActions m_Wrapper;
+        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }

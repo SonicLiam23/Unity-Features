@@ -6,23 +6,22 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// A player character, containing unique movement that takes player input
 /// </summary>
-[RequireComponent(typeof(PlayerInput))]
-public class Player : Character
+//[RequireComponent(typeof(PlayerInput))]
+public class Player : Character, PlayerInputActions.IPlayerActions
 {
-    PlayerInput input;
+    private PlayerInputActions inputActions;
 
     protected override void Awake()
     {
         base.Awake();
-        input = GetComponent<PlayerInput>();
-        RigidBodyComp.constraints = RigidbodyConstraints2D.FreezeRotation;
-        if (input.actions == null)
-        {
-            Debug.LogWarning("Please set the player input in the Player Input component!");
-        }
-    }
 
-    public void Move(InputAction.CallbackContext context)
+        RigidBodyComp.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        inputActions = new PlayerInputActions();
+        inputActions.Player.SetCallbacks(this);
+        inputActions.Enable(); // Enables the whole action map
+    }
+    public void OnMove(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -34,8 +33,8 @@ public class Player : Character
         }
     }
 
-    public void Jump(InputAction.CallbackContext context)
-     {
+    public void OnJump(InputAction.CallbackContext context)
+    {
         if (context.started && MovementController.canJump)
         {
             StartCoroutine(MovementController.DisableGroundCheck());
