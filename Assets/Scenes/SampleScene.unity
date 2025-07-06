@@ -1197,6 +1197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1454600798}
   - component: {fileID: 1454600799}
+  - component: {fileID: 1454600800}
   m_Layer: 0
   m_Name: _GameManager
   m_TagString: Untagged
@@ -1232,6 +1233,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueJson: {fileID: 4900000, guid: e2f1f406d5544cb4e87c5f0b56173959, type: 3}
+--- !u!114 &1454600800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454600796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa4db9565e14e94d92a7f0f01f6188e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1502938260
 GameObject:
   m_ObjectHideFlags: 0

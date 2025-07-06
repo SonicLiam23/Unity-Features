@@ -9,7 +9,6 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerHealth))]
 public class Player : Character, PlayerInputActions.IPlayerActions
 {
-    private PlayerInputActions inputActions;
 
     protected override void Awake()
     {
@@ -17,9 +16,8 @@ public class Player : Character, PlayerInputActions.IPlayerActions
 
         RigidBodyComp.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        inputActions = new PlayerInputActions();
-        inputActions.Player.SetCallbacks(this);
-        inputActions.Enable(); // Enables the whole action map
+        InputManager.InputActions.Player.SetCallbacks(this);
+        InputManager.InputActions.Player.Enable(); // Enables the player action map
     }
     public void OnMove(InputAction.CallbackContext context)
     {
