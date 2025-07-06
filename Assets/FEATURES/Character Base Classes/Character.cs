@@ -11,7 +11,6 @@ using System;
 /// </summary>
 [RequireComponent(typeof(MovementStateMachineController))]
 [RequireComponent(typeof(HealthBase))]
-[RequireComponent(typeof(DialogueTrigger))]
 public class Character : Entity
 {
     public MovementStateMachineController MovementController { get; protected set; }

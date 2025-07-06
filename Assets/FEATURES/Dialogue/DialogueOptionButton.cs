@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
-public class DialogueOptionButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class DialogueOptionButton : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI TMP;
     [SerializeField] TextEffect effect;
@@ -21,7 +21,7 @@ public class DialogueOptionButton : MonoBehaviour, IPointerEnterHandler, IPointe
 
         TMP.text = "[ " + option.text + " ]";
 
-        StartCoroutine(Delay());
+        StartCoroutine(DelayEnable());
     }
 
     public void OnClick()
@@ -30,17 +30,17 @@ public class DialogueOptionButton : MonoBehaviour, IPointerEnterHandler, IPointe
         dialogueComponent.ShowDialogue(dialogueOption.next);
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void Select()
     {
         TMP.color = Color.yellow;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void Deselect()
     {
         TMP.color = Color.white;
     }
 
-    IEnumerator Delay()
+    IEnumerator DelayEnable()
     {
         yield return new WaitForEndOfFrame();
 

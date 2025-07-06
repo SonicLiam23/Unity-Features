@@ -1,9 +1,7 @@
 using EasyTextEffects;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 // This needs revising. The instantiation, deletion and getcomponent calls are generally inefficient. But as im dealing with maybe 1 or 2 dialogues at once, the impact is hopefully negligible.
 // Will 100% come back to this as this project develops.
@@ -21,7 +19,7 @@ public class DialogueComponent : MonoBehaviour
  
     [Header("Dialogue Options (leave empty for none)")]
     [SerializeField] private GameObject optionButtonPrefab;
-    List<GameObject> options;
+    public List<DialogueOptionButton> Options { get; private set; }
 
     string text;
     DialogueEntry currentEntry;
@@ -30,7 +28,7 @@ public class DialogueComponent : MonoBehaviour
     {
         TMP = GetComponent<TextMeshProUGUI>();
         textEffect = GetComponent<TextEffect>();
-        options = new();
+        Options = new();
     }
 
     private void Start()
@@ -70,14 +68,15 @@ public class DialogueComponent : MonoBehaviour
         {
             foreach (var option in currentEntry.options)
             {
-                GameObject buttonObject = Instantiate(optionButtonPrefab, transform.parent);
-                buttonObject.GetComponent<DialogueOptionButton>().Init(option, this);
-                options.Add(buttonObject);
+                DialogueOptionButton button = Instantiate(optionButtonPrefab, transform.parent).GetComponent<DialogueOptionButton>();
+                button.Init(option, this);
+                Options.Add(button);
             }
         }
         TMP.enabled = true;
         textEffect.enabled = true;
 
+        Options[0].Select();
     }
     
     /// <summary>
@@ -92,7 +91,7 @@ public class DialogueComponent : MonoBehaviour
         }
 
         textEffect.StartManualEffects();
-        foreach (var option in options)
+        foreach (var option in Options)
         {
             option.GetComponentInChildren<TextEffect>().StartManualEffects();
         }
@@ -106,11 +105,11 @@ public class DialogueComponent : MonoBehaviour
     public void ClearDialogue()
     {
 
-        foreach (GameObject option in options)
+        foreach (DialogueOptionButton option in Options)
         {
-            Destroy(option);
+            Destroy(option.gameObject);
         }
-        options.Clear();
+        Options.Clear();
         TMP.enabled = false;
         textEffect.enabled = false;
     }

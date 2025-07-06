@@ -6,14 +6,16 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     DialogueComponent dialogue;
+    DialogueInput input;
     
 
     private void Awake()
     {
-        dialogue = GetComponentInChildren<DialogueComponent>();
+        input = GetComponentInChildren<DialogueInput>();
+        dialogue = input.dialogue;
         if (dialogue == null)
         {
-            Debug.LogWarning($"DialogueComponent not found in {gameObject.name}. Dialogue on this object will not be shown.\nIf you did mean to add it, ensure it is attatched to [a child of] {gameObject.name}.");
+            Debug.LogWarning($"DialogueComponent not found in {gameObject.name}. You must attach a DialogueInput to this or a child.");
             this.enabled = false;
         }
     }
@@ -21,11 +23,20 @@ public class DialogueTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+        {
             dialogue.ShowDialogue();
+            InputManager.InputActions.Dialogue.Enable();
+            input.BeginDialogue();
+        }
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+        {
             dialogue.HideDialogue();
+            InputManager.InputActions.Dialogue.Disable();
+        }
+            
     }
 }
