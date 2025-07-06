@@ -2,7 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 class JumpState : IMovementState
-{
+{ 
+
     public JumpState(MovementStateMachineController Pcontroller)
     {
         stateController = Pcontroller;
@@ -40,13 +41,14 @@ class JumpState : IMovementState
 
             
             stateController.timeScaleHandler.QueueJump(stateController.JumpForce);
+
+            
         }
     }
     public void UpdateState()
     {
         Move();
-        // I use ignoreGrounded because, depending on update order, this runs before the velocity is applied, so I need to "wait" until jump is actually being performed
-        if (rb.velocity.y <= 0 && !stateController.ignoreGrounded)
+        if (rb.velocity.y <= 0 && !stateController.foot.IsGrounded)
         {
              stateController.ChangeState(typeof(FallingState));
         }

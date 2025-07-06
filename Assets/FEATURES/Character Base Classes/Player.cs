@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// A player character, containing unique movement that takes player input
 /// </summary>
-//[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerHealth))]
 public class Player : Character, PlayerInputActions.IPlayerActions
 {
     private PlayerInputActions inputActions;
@@ -37,7 +37,6 @@ public class Player : Character, PlayerInputActions.IPlayerActions
     {
         if (context.started && MovementController.canJump)
         {
-            StartCoroutine(MovementController.DisableGroundCheck());
             MovementController.CurrentState.Jump();
         }
     }

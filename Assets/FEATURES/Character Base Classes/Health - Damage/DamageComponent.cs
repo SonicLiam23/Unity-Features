@@ -8,7 +8,7 @@ public class DamageComponent : MonoBehaviour
     [SerializeField] private float damage;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HealthComponent healthComp = collision.GetComponent<HealthComponent>();
+        HealthBase healthComp = collision.GetComponent<HealthBase>();
         if (healthComp != null )
             healthComp.Damage(damage);
     }
