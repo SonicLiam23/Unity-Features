@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum FacingDirection
+{
+    UP, DOWN, LEFT, RIGHT
+}
+
+
+
 /// <summary>
 /// A player character, containing unique movement that takes player input
 /// </summary>
 [RequireComponent(typeof(PlayerHealth))]
 public class Player : Character, PlayerInputActions.IPlayerActions
 {
-
+    [SerializeField] Transform temp;
     protected override void Awake()
     {
         base.Awake();
@@ -37,5 +44,10 @@ public class Player : Character, PlayerInputActions.IPlayerActions
         {
             MovementController.CurrentState.Jump();
         }
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        temp.localPosition = context.ReadValue<Vector2>() * 3;
     }
 }
