@@ -17,7 +17,6 @@ public class DialogueOptionButton : MonoBehaviour
     { 
         dialogueOption = option;
         dialogueComponent = dialogue;
-        //TMP = GetComponentInChildren<TextMeshProUGUI>();
 
         TMP.text = "[ " + option.text + " ]";
 

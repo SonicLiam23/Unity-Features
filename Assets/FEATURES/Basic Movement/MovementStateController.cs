@@ -57,7 +57,7 @@ public class MovementStateMachineController : StateMachineBase<IMovementState, M
 
     protected override void Update()
     {
-        Debug.Log(CurrentState.GetType());
+        //Debug.Log(CurrentState.GetType());
         base.Update(); 
     }
 }

@@ -12,13 +12,12 @@ public class DialogueInput : MonoBehaviour, PlayerInputActions.IDialogueActions
     {
         dialogue = GetComponent<DialogueComponent>();
         InputManager.InputActions.Dialogue.SetCallbacks(this);
-        
+        InputManager.InputActions.Dialogue.Disable();
         currOptionIndex = 0;
     }    
     
     public void BeginDialogue()
     {
-        Debug.Log($"Dialogue started at {currOptionIndex}.");
         dialogue.Options[currOptionIndex].Select();
     }
 
@@ -51,6 +50,8 @@ public class DialogueInput : MonoBehaviour, PlayerInputActions.IDialogueActions
             dialogue.Options[currOptionIndex]?.OnClick();
             // reset for the next option
             currOptionIndex = 0;
+            // begin dialogue again
+            BeginDialogue();
         }
             
     }

@@ -21,7 +21,7 @@ public abstract class HealthBase : MonoBehaviour, IDamageable
     public virtual void Damage(float dmg)
     {
         currentHealth -= dmg;
-        if (currentHealth < 0)
+        if (currentHealth <= 0f)
         {
             OnDeath();
         }

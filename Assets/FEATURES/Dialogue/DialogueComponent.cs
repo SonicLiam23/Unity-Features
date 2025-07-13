@@ -71,12 +71,12 @@ public class DialogueComponent : MonoBehaviour
                 DialogueOptionButton button = Instantiate(optionButtonPrefab, transform.parent).GetComponent<DialogueOptionButton>();
                 button.Init(option, this);
                 Options.Add(button);
+                
             }
         }
         TMP.enabled = true;
         textEffect.enabled = true;
 
-        Options[0].Select();
     }
     
     /// <summary>

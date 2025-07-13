@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "2e8c19d1-24f8-409b-a6e7-b2d3a19b4786",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -123,6 +132,61 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "2D Vector",
+                    "id": "ed51e4e6-c9f1-4ee1-819d-fce6e018acf0",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "5670aad8-d815-447b-98ee-5ea7334c74e9",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "aaa9eacc-93d5-45ae-8144-0cd1dfb66537",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "daa3e1a9-ce03-4f04-b536-12b902f11e79",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "0ee26c6f-90b6-4c2f-a463-26eee9850068",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "77a63664-49e4-4220-b7a9-5ac975e65197",
                     "path": "<Gamepad>/leftStick",
@@ -130,6 +194,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8c5a5c20-153a-4ef6-86a0-c76527a6739f",
+                    "path": "<Joystick>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5a8f85b-dbf5-4ce4-9a11-fac4b47834fa",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d6ff00b8-3d7b-4b99-ab3f-e55c67c5a497",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
