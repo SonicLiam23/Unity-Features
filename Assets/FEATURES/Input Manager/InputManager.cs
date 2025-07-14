@@ -20,6 +20,8 @@ public class  InputManager : MonoBehaviour
 
         Instance = this;
         InputActions = new PlayerInputActions();
+
+        // menu code
         InputActions.Menu.Navigate.started += ctx => currentMenuHandler?.OnNavigate(ctx);
         InputActions.Menu.Select.started += ctx => currentMenuHandler?.OnSelect(ctx);
     }
@@ -29,12 +31,6 @@ public class  InputManager : MonoBehaviour
         Instance.currentMenuHandler = newHandler;
         Instance.InputActions.Menu.Enable();
     }
-
-    public static void RemoveCurrentMenu()
-    {
-
-    }
-
 
     private void OnDisable()
     {

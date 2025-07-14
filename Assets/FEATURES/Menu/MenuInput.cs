@@ -17,13 +17,13 @@ public class MenuInput<ButtonType> : MonoBehaviour, PlayerInputActions.IMenuActi
         currOptionIndex = 0;
     }    
     
-    public void BeginMenu()
+    public virtual void BeginMenu()
     {
         InputManager.Instance.SetCurrentMenu(this);
         buttons[currOptionIndex].Focus();
     }
 
-    public void OnNavigate(InputAction.CallbackContext context)
+    public virtual void OnNavigate(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -45,7 +45,7 @@ public class MenuInput<ButtonType> : MonoBehaviour, PlayerInputActions.IMenuActi
         }
     }
 
-    public void OnSelect(InputAction.CallbackContext context)
+    public virtual void OnSelect(InputAction.CallbackContext context)
     {
         if (context.started)
         {

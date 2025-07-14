@@ -73,7 +73,7 @@ public class Player : Character, PlayerInputActions.IPlayerActions
         if (context.performed)
         {
             lookVec = context.ReadValue<Vector2>();
-        } 
+        }
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -101,10 +101,5 @@ public class Player : Character, PlayerInputActions.IPlayerActions
                 attackManager.Attack(facingDir);
             }
         }
-    }
-
-    public void OnPause(InputAction.CallbackContext context)
-    {
-        throw new System.NotImplementedException();
     }
 }
