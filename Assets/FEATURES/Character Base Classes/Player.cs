@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,8 +26,8 @@ public class Player : Character, PlayerInputActions.IPlayerActions
 
         RigidBodyComp.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        InputManager.InputActions.Player.SetCallbacks(this);
-        InputManager.InputActions.Player.Enable(); // Enables the player action map
+        InputManager.Instance.InputActions.Player.SetCallbacks(this);
+        InputManager.Instance.InputActions.Player.Enable(); // Enables the player action map
 
         attackManager = GetComponent<AttackManager>();
     }
@@ -102,5 +101,10 @@ public class Player : Character, PlayerInputActions.IPlayerActions
                 attackManager.Attack(facingDir);
             }
         }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        throw new System.NotImplementedException();
     }
 }

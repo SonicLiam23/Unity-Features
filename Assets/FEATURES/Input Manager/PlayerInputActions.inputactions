@@ -20,7 +20,7 @@
                     "id": "d71deb6f-2031-4b23-8016-f4fc5a87e680",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=1)",
+                    "interactions": "",
                     "initialStateCheck": true
                 },
                 {
@@ -36,6 +36,15 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "2e8c19d1-24f8-409b-a6e7-b2d3a19b4786",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "cabd0cd8-2219-4bbe-8c2e-56f9c2f79c1f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -229,11 +238,33 @@
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "006593c6-8257-440b-bc60-7e9571312607",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64616ea2-8d2a-4062-a744-a287374d340c",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "Dialogue",
+            "name": "Menu",
             "id": "5eb87cb0-f744-4c7a-9770-53252f71523d",
             "actions": [
                 {

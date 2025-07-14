@@ -86,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6301027947174616368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 403888344480565478}
   - component: {fileID: 210334921053438668}
   - component: {fileID: 6861856036183981772}
-  - component: {fileID: 1381284864924610816}
+  - component: {fileID: 554032602934980772}
   m_Layer: 7
   m_Name: Dialogue
   m_TagString: Untagged
@@ -337,7 +337,7 @@ MonoBehaviour:
           m_CallState: 2
     overrideTagEffects: 0
   updatesPerSecond: 30
---- !u!114 &1381284864924610816
+--- !u!114 &554032602934980772
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,6 +346,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8722938954909211411}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4811c6f7ab0dc2d4786d15f5b57c9415, type: 3}
+  m_Script: {fileID: 11500000, guid: 7621edb29bce01047aadfde22f2a4192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

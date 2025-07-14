@@ -25,8 +25,8 @@ public class DialogueTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             dialogue.ShowDialogue();
-            InputManager.InputActions.Dialogue.Enable();
-            input.BeginDialogue();
+            InputManager.Instance.InputActions.Menu.Enable();
+            input.BeginMenu();
         }
 
     }
@@ -35,7 +35,7 @@ public class DialogueTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             dialogue.HideDialogue();
-            InputManager.InputActions.Dialogue.Disable();
+            InputManager.Instance.InputActions.Menu.Disable();
         }
             
     }

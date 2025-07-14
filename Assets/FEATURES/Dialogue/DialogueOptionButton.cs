@@ -1,12 +1,9 @@
 using EasyTextEffects;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
-public class DialogueOptionButton : MonoBehaviour
+public class DialogueOptionButton : MonoBehaviour, IMenuButton 
 {
     [SerializeField] TextMeshProUGUI TMP;
     [SerializeField] TextEffect effect;
@@ -29,12 +26,12 @@ public class DialogueOptionButton : MonoBehaviour
         dialogueComponent.ShowDialogue(dialogueOption.next);
     }
 
-    public void Select()
+    public void Focus()
     {
         TMP.color = Color.yellow;
     }
 
-    public void Deselect()
+    public void UnFocus()
     {
         TMP.color = Color.white;
     }
