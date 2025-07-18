@@ -15,7 +15,7 @@ public class Player : Character, PlayerInputActions.IPlayerActions
 {
     // start facing right
     Vector2 lookVec = Vector2.right;
-    Direction facingDir;
+    Direction facingLR;
     AttackManager attackManager;
     [SerializeField] private float verticalAttackDeadzone = 0.7f;
     [SerializeField] private float horizontalMoveDeadzone = 0.3f;
@@ -32,6 +32,30 @@ public class Player : Character, PlayerInputActions.IPlayerActions
         attackManager = GetComponent<AttackManager>();
     }
 
+    private Direction GetDirection()
+    {
+        float dot = Vector2.Dot(Vector2.up, lookVec);
+
+        // is the dot product greater than the deadzone? (default 0.7)
+        if (Mathf.Abs(dot) >= verticalAttackDeadzone)
+        {
+            // if yes, we are attacking up or down
+            bool attackUp = (dot >= 0f);
+            if (attackUp)
+            {
+                return Direction.UP;
+            }
+            else
+            {
+                return Direction.DOWN;
+            }
+        }
+        else
+        {
+            return facingLR;
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -45,11 +69,11 @@ public class Player : Character, PlayerInputActions.IPlayerActions
                 bool facingLeft = (newVelocity <= 0f);
                 if (facingLeft)
                 {
-                    facingDir = Direction.LEFT;
+                    facingLR = Direction.LEFT;
                 }
                 else
                 {
-                    facingDir = Direction.RIGHT;
+                    facingLR = Direction.RIGHT;
                 }
             }
 
@@ -80,26 +104,21 @@ public class Player : Character, PlayerInputActions.IPlayerActions
     {
         if (context.started && !attackManager.Attacking)
         {
-            float dot = Vector2.Dot(Vector2.up, lookVec);
-
-            // is the dot product greater than the deadzone? (default 0.7)
-            if (Mathf.Abs(dot) >= verticalAttackDeadzone)
-            {
-                // if yes, we are attacking up or down
-                bool attackUp = (dot >= 0f);
-                if (attackUp)
-                {
-                    attackManager.Attack(Direction.UP);
-                }
-                else
-                {
-                    attackManager.Attack(Direction.DOWN);
-                }
-            }
-            else
-            {
-                attackManager.Attack(facingDir);
-            }
+            attackManager.ChangeAttackType(AttackType.ATTACK);
+            attackManager.Attack(GetDirection());
         }
     }
+    public void OnParry(InputAction.CallbackContext context)
+    {
+        if (context.started && !attackManager.Attacking)
+        {
+            attackManager.ChangeAttackType(AttackType.PARRY);
+            attackManager.Attack(GetDirection());
+        }
+    }
+
+
+
+
+
 }

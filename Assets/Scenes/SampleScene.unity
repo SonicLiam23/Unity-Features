@@ -1621,8 +1621,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a9feba58cf6c7a42979085b8f7cde1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDuration: 0.2
   attackObj: {fileID: 8923756261811091224, guid: 4cb4c84603eac2148abb6b89f48be73e, type: 3}
+  attackDuration: 0.2
+  parryObj: {fileID: 7847531788387633557, guid: 6adf7544a6866224283fccd758400186, type: 3}
+  parryDuration: 0.3
   attackPositions:
   - {fileID: 1215009265}
   - {fileID: 1075071747}
