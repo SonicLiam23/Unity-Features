@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
 
 public enum TimeScaleMode { MODIFY, UNDO }
 
@@ -19,9 +16,16 @@ public class TimeScaleHandler : MonoBehaviour
     public float baseDrag = 0f;
     public float baseAngularDrag = 0f;
 
+    Animator[] animators;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        animators = GetComponentsInChildren<Animator>();
     }
 
     public void SetDesiredVelocity(Vector2 vel) => pendingVelocity = vel;
@@ -38,11 +42,21 @@ public class TimeScaleHandler : MonoBehaviour
         {
             vel.y *= factor;
             LocalTimeScale *= factor;
+
+            for (int i = 0; i < animators.Length; ++i)
+            {
+                animators[i].speed *= factor;
+            }
         }
         else
         {
             vel.y /= factor;
             LocalTimeScale /= factor;
+
+            for (int i = 0; i < animators.Length; ++i)
+            {
+                animators[i].speed /= factor;
+            }
         }
         rb.velocity = vel;
     }
@@ -52,6 +66,11 @@ public class TimeScaleHandler : MonoBehaviour
         vel /= LocalTimeScale;
         LocalTimeScale = 1f;
         rb.velocity = vel;
+
+        for (int i = 0; i < animators.Length; ++i)
+        {
+            animators[i].speed = 1f;
+        }
     }
 
     void FixedUpdate()

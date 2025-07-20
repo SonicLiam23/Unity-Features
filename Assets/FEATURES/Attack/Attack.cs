@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// controls the tag, saying if it is a perfect parry or not.
-/// </summary>
-public class Parry : MonoBehaviour
+public class Attack : MonoBehaviour
 {
 
     public AttackManager manager;
@@ -15,24 +12,10 @@ public class Parry : MonoBehaviour
         manager = transform.parent.GetComponent<AttackManager>();
     }
 
-
-    private void OnEnable()
-    {
-        gameObject.tag = "PerfectParry";
-        
-    }
-
-
-    public void EndPerfectParry()
-    {
-        gameObject.tag = "Parry";
-    }
-
-    public void StopParry()
+    public void StopAttack()
     {
         manager.Attacking = false;
         manager.currTrigger.enabled = false;
         gameObject.SetActive(false);
     }
-
 }

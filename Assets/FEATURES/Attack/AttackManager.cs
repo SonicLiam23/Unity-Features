@@ -12,15 +12,18 @@ public class AttackManager : MonoBehaviour
 
     
     [SerializeField] GameObject attackObj;
-    [SerializeField] float attackDuration = 0.2f;
     [SerializeField] GameObject parryObj;
     [SerializeField] float parryDuration;
     Collider2D attackTrigger;
     Collider2D parryTrigger;
 
     GameObject currAttack;
+    public Collider2D currTrigger;
+    float attackDuration;
     float duration;
-    public bool Attacking { get; private set; } = false;
+    public bool Attacking = false;
+    bool flipAttack = false;
+
     [Header("In order of UP, DOWN, LEFT, RIGHT.")]
     [SerializeField] Transform[] attackPositions = new Transform[4];
 
@@ -39,6 +42,17 @@ public class AttackManager : MonoBehaviour
 
         parryObj = Instantiate(parryObj, transform);
         parryTrigger = parryObj.GetComponent<Collider2D>();
+
+        Animator anim = attackObj.GetComponent<Animator>();
+        if (anim == null)
+        {
+            Debug.LogError("No animator found on attack object.");
+            return;
+        } 
+
+        attackDuration = anim.runtimeAnimatorController.animationClips[0].length;
+        Debug.Log(duration);
+
     }
 
     // Start is called before the first frame update
@@ -54,11 +68,13 @@ public class AttackManager : MonoBehaviour
         {
             case AttackType.ATTACK:
                 currAttack = attackObj;
+                currTrigger = attackTrigger;
                 duration = attackDuration;
                 break;
 
             case AttackType.PARRY:
                 currAttack = parryObj;
+                currTrigger = parryTrigger;
                 duration = parryDuration;
                 break;
         }
@@ -71,17 +87,20 @@ public class AttackManager : MonoBehaviour
         currAttack.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         currAttack.transform.localScale = Vector3.one;
 
+
+        
+        if (flipAttack)
+        {        
+            Vector3 currScale = currAttack.transform.localScale;
+            currScale.y *= -1;
+            currAttack.transform.localScale = currScale;
+        }
+        flipAttack = !flipAttack;
+
+
         currAttack.SetActive(true);
         // re-enable to allow "TriggerEnter" to be run
-        attackTrigger.enabled = true;
-        StartCoroutine(StopAttack());
+        currTrigger.enabled = true;
     }
 
-    IEnumerator StopAttack()
-    {
-        yield return new WaitForSeconds(duration);
-        currAttack.SetActive(false);
-        attackTrigger.enabled = false;
-        Attacking = false;
-    }
 }
