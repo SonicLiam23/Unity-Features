@@ -12,6 +12,7 @@ public class TimeScaleHandler : MonoBehaviour
     float pendingAngularVelocity;
     bool jumpQueued;
     float jumpImpulse;
+    float startGravityScale;
 
     public float baseDrag = 0f;
     public float baseAngularDrag = 0f;
@@ -21,6 +22,7 @@ public class TimeScaleHandler : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        startGravityScale = rb.gravityScale;
     }
 
     private void Start()
@@ -28,7 +30,13 @@ public class TimeScaleHandler : MonoBehaviour
         animators = GetComponentsInChildren<Animator>();
     }
 
-    public void SetDesiredVelocity(Vector2 vel) => pendingVelocity = vel;
+    public void SetDesiredVelocity(Vector2 vel)
+    {
+        pendingVelocity = vel;
+        // I mainly want rb.linearVelocity.y to be controlled by gravity, so set it once here.
+        rb.linearVelocityY = vel.y;
+
+    }
     public void SetDesiredAngularVel(float aVel) => pendingAngularVelocity = aVel;
     public void QueueJump(float impulse) 
     {
@@ -37,7 +45,7 @@ public class TimeScaleHandler : MonoBehaviour
     }
     public void ModifyTime(float factor, TimeScaleMode mode = TimeScaleMode.MODIFY)
     {
-        Vector2 vel = rb.velocity;
+        Vector2 vel = rb.linearVelocity;
         if (mode == TimeScaleMode.MODIFY)
         {
             vel.y *= factor;
@@ -58,14 +66,14 @@ public class TimeScaleHandler : MonoBehaviour
                 animators[i].speed /= factor;
             }
         }
-        rb.velocity = vel;
+        rb.linearVelocity = vel;
     }
     public void ResetTime()
     {
-        Vector2 vel = rb.velocity;
+        Vector2 vel = rb.linearVelocity;
         vel /= LocalTimeScale;
         LocalTimeScale = 1f;
-        rb.velocity = vel;
+        rb.linearVelocity = vel;
 
         for (int i = 0; i < animators.Length; ++i)
         {
@@ -76,8 +84,7 @@ public class TimeScaleHandler : MonoBehaviour
     void FixedUpdate()
     {
         float s = LocalTimeScale;
-        Vector2 vel = rb.velocity;
-        vel = rb.velocity;
+        Vector2 vel = rb.linearVelocity;
 
         // skip vector calculations if LocalTimeScale is 1, for performance 
         if (Mathf.Approximately(s, 1f))
@@ -86,7 +93,7 @@ public class TimeScaleHandler : MonoBehaviour
             
             rb.angularVelocity = pendingAngularVelocity;
 
-            rb.gravityScale = 1f;
+            rb.gravityScale = startGravityScale;
 
             if (jumpQueued)
             {
@@ -95,9 +102,9 @@ public class TimeScaleHandler : MonoBehaviour
 
             }
 
-            rb.drag = baseDrag;
-            rb.angularDrag = baseAngularDrag;
-            rb.velocity = vel;
+            rb.linearDamping = baseDrag;
+            rb.angularDamping = baseAngularDrag;
+            rb.linearVelocity = vel;
             return;
         }
            
@@ -105,7 +112,7 @@ public class TimeScaleHandler : MonoBehaviour
         rb.angularVelocity = pendingAngularVelocity * s;
 
         // Apply scaled gravity
-        rb.gravityScale = s * s; 
+        rb.gravityScale = startGravityScale * s * s; 
 
         if (jumpQueued)
         {
@@ -113,9 +120,9 @@ public class TimeScaleHandler : MonoBehaviour
             jumpQueued = false;
         }
 
-        rb.drag = baseDrag * s * s;
-        rb.angularDrag = baseAngularDrag * s * s;
-        rb.velocity = vel;
+        rb.linearDamping = baseDrag * s * s;
+        rb.angularDamping = baseAngularDrag * s * s;
+        rb.linearVelocity = vel;
 
     }
 }

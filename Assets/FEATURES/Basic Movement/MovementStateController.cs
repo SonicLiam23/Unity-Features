@@ -20,7 +20,7 @@ public class MovementStateMachineController : StateMachineBase<IMovementState, M
     public bool IsGrounded
     {
 
-        get => (foot.IsGrounded);
+        get => ((foot == null ? true : foot.IsGrounded));
     }
     public float JumpForce = 100f;
     public float maxSpeed = 10f;

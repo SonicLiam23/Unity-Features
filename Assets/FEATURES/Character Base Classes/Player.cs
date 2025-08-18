@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 public enum Direction
 {
@@ -13,12 +14,13 @@ public enum Direction
 [RequireComponent(typeof(AttackManager))]
 public class Player : Character, PlayerInputActions.IPlayerActions
 {
-    // start facing right
-    Vector2 lookVec = Vector2.right;
+    
     Direction facingLR;
     AttackManager attackManager;
     [SerializeField] private float verticalAttackDeadzone = 0.7f;
     [SerializeField] private float horizontalMoveDeadzone = 0.3f;
+    [SerializeField] private GameObject dot;
+    [SerializeField] private GameObject proj;
 
     protected override void Awake()
     {
@@ -30,11 +32,12 @@ public class Player : Character, PlayerInputActions.IPlayerActions
         InputManager.Instance.InputActions.Player.Enable(); // Enables the player action map
 
         attackManager = GetComponent<AttackManager>();
+        LookVec = Vector2.right;
     }
 
     private Direction GetDirection()
     {
-        float dot = Vector2.Dot(Vector2.up, lookVec);
+        float dot = Vector2.Dot(Vector2.up, LookVec);
 
         // is the dot product greater than the deadzone? (default 0.7)
         if (Mathf.Abs(dot) >= verticalAttackDeadzone)
@@ -89,6 +92,7 @@ public class Player : Character, PlayerInputActions.IPlayerActions
         if (context.started && MovementController.canJump)
         {
             MovementController.CurrentState.Jump();
+            
         }
     }
 
@@ -96,7 +100,13 @@ public class Player : Character, PlayerInputActions.IPlayerActions
     {
         if (context.performed)
         {
-            lookVec = context.ReadValue<Vector2>();
+            LookVec = context.ReadValue<Vector2>().normalized;
+            dot.transform.localPosition = LookVec * 3f;
+
+            Vector2 awayDir = (dot.transform.position - transform.position).normalized;
+            float angle = Mathf.Atan2(awayDir.y, awayDir.x) * Mathf.Rad2Deg;
+            // Apply rotation only on Z-axis
+            dot.transform.rotation = Quaternion.Euler(0, 0, angle + 90f );
         }
     }
 
@@ -106,6 +116,17 @@ public class Player : Character, PlayerInputActions.IPlayerActions
         {
             attackManager.ChangeAttackType(AttackType.ATTACK);
             attackManager.Attack(GetDirection());
+            // HeldWeapon.Use();
+            //GameObject spawned = Instantiate(proj, transform.position, Quaternion.identity);
+
+            //Vector2 awayDir = (dot.transform.position - transform.position).normalized;
+            //float angle = Mathf.Atan2(awayDir.y, awayDir.x) * Mathf.Rad2Deg;
+            //// Apply rotation only on Z-axis
+            //spawned.transform.rotation = Quaternion.Euler(0, 0, angle);
+            //Debug.Log(spawned.transform.forward);
+            //spawned.GetComponent<Rigidbody2D>().velocity = LookVec * 20f;
+
+            HeldWeapon.Use();
         }
     }
     public void OnParry(InputAction.CallbackContext context)

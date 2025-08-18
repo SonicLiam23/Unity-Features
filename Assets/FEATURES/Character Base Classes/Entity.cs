@@ -6,8 +6,10 @@ using UnityEngine;
 /// A class to define an entity in the world.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(TimeScaleHandler))]
 public class Entity : MonoBehaviour
 {
+    public Team team;
     public Rigidbody2D RigidBodyComp { get; protected set; }
 
     protected virtual void Awake()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class Attack_OLD : MonoBehaviour
 {
 
     public AttackManager manager;

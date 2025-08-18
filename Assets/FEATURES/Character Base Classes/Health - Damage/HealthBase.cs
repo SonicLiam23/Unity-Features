@@ -17,6 +17,7 @@ public abstract class HealthBase : MonoBehaviour, IDamageable
 
     public virtual void Damage(float dmg)
     {
+        dmg = Mathf.Abs(dmg);
         currentHealth -= dmg;
         if (currentHealth <= 0f)
         {

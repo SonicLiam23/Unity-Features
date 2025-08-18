@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Team
+{
+    ALLY, ENEMY, NONE
+}
+
 public class GameplayManager : MonoBehaviour, PlayerInputActions.IGlobalActions
 {
     static public GameplayManager Instance { get; private set; }

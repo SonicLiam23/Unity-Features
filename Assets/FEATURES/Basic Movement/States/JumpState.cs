@@ -15,7 +15,7 @@ class JumpState : IMovementState
     public void Move()
     {
         // movement should still happen in the air
-        stateController.velocity.y = rb.velocity.y;
+        stateController.velocity.y = rb.linearVelocity.y;
         stateController.velocity.x = stateController.velocityMult * stateController.maxSpeed;
         stateController.timeScaleHandler.SetDesiredVelocity(stateController.velocity);
     }
@@ -48,7 +48,7 @@ class JumpState : IMovementState
     public void UpdateState()
     {
         Move();
-        if (rb.velocity.y <= 0 && !stateController.foot.IsGrounded)
+        if (rb.linearVelocity.y <= 0 && !stateController.foot.IsGrounded)
         {
              stateController.ChangeState(typeof(FallingState));
         }

@@ -14,7 +14,7 @@ public class WalkState : IMovementState
 
     public void Move()
     {
-        stateController.velocity.y = rb.velocity.y;
+        stateController.velocity.y = rb.linearVelocity.y;
         stateController.velocity.x = stateController.velocityMult * stateController.maxSpeed;
         stateController.timeScaleHandler.SetDesiredVelocity(stateController.velocity);
 
