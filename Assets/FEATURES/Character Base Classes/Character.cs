@@ -29,6 +29,8 @@ public class Character : Entity
         MovementController = GetComponent<MovementStateMachineController>();
         HealthComp = GetComponent<HealthBase>();
 
+        HeldWeapon = GetComponentInChildren<Weapon>();
+
     }
 
     public virtual void Move(Vector2 newVelocity)

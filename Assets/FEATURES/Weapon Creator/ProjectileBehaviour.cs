@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class ProjectileBehaviour
 {
+    
     protected ProjectileObject ProjectileObj;
     public virtual void OnCreate(ProjectileObject proj)
     {

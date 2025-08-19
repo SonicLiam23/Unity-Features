@@ -3,29 +3,27 @@ using UnityEngine;
 [System.Serializable]
 public class ProjectileSpawner : Attack
 {
+    [Tooltip("Prefab with ProjectileObject goes here")]
     public ProjectileObject ProjectileObj;
-    [HideInInspector] public Weapon FiringWeapon;
-    public float Cooldown, LifeTime, TimeBetweenShots, ProjectileSpeed;
+    public float LifeTime, TimeBetweenShots, ProjectileSpeed;
     public int FireCount = 1;
     private int fired = 0;
-    private bool firing = false;
+    
 
-    /// <summary>
-    /// The cooldown between Starting firing, and starting firing again
-    /// </summary>
-    private float currentCooldown;
+
     /// <summary>
     /// if FireCount is > 1, this is the current timer between each shot.
     /// </summary>
-    private float currentMultishotCooldown;
+    private float currentMultishotCooldown = 0f;
 
 
     public void Fire(Weapon w)
     {
-        if (CanFire())
+        if (CanAttack())
         {
-            FiringWeapon = w;
-            firing = true;
+            weapon = w;
+            attacking = true;
+            currentCooldown = Cooldown;
         }
     }
 
@@ -33,20 +31,17 @@ public class ProjectileSpawner : Attack
     /// returns true when all shots have been fired (in a multishot) or when the cooldown is over, whichever is longest.
     /// </summary>
     /// <returns>true: if both all shots have been fired, and cooldown is over.</returns>
-    public bool CanFire()
+    public override bool CanAttack()
     {
-        // fired will equal 0 when we are yet to fire anything
-        return (fired <= 0 && currentCooldown <= 0f);
+        return base.CanAttack() && fired <= 0;
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
-        if (Cooldown > 0f)
-        {
-            currentCooldown -= Time.deltaTime;
-        }
+        base.OnUpdate();
 
-        if (firing)
+        // i dont like this
+        if (attacking)
         {
             if (fired < FireCount)
             {
@@ -61,13 +56,14 @@ public class ProjectileSpawner : Attack
                     if (LifeTime > 0f)
                         Object.Destroy(go.gameObject, LifeTime);
 
-                    go.OnSummon(FiringWeapon.owner, ProjectileSpeed);
+                    go.OnSummon(weapon.owner, ProjectileSpeed);
                 }
             }
             else
             {
-                firing = false;
+                attacking = false;
                 fired = 0;
+                currentMultishotCooldown = 0f;
             }
         }
     }    

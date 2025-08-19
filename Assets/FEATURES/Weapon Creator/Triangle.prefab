@@ -140,7 +140,8 @@ MonoBehaviour:
     RefIds:
     - rid: 2759914229432582255
       type: {class: FireInLookDirection, ns: , asm: Assembly-CSharp}
-      data: 
+      data:
+        DidWork: 0
 --- !u!61 &-2262187221484499713
 BoxCollider2D:
   m_ObjectHideFlags: 0

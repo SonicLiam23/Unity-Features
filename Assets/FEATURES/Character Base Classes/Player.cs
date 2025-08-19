@@ -112,20 +112,8 @@ public class Player : Character, PlayerInputActions.IPlayerActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.started && !attackManager.Attacking)
+        if (context.started)
         {
-            attackManager.ChangeAttackType(AttackType.ATTACK);
-            attackManager.Attack(GetDirection());
-            // HeldWeapon.Use();
-            //GameObject spawned = Instantiate(proj, transform.position, Quaternion.identity);
-
-            //Vector2 awayDir = (dot.transform.position - transform.position).normalized;
-            //float angle = Mathf.Atan2(awayDir.y, awayDir.x) * Mathf.Rad2Deg;
-            //// Apply rotation only on Z-axis
-            //spawned.transform.rotation = Quaternion.Euler(0, 0, angle);
-            //Debug.Log(spawned.transform.forward);
-            //spawned.GetComponent<Rigidbody2D>().velocity = LookVec * 20f;
-
             HeldWeapon.Use();
         }
     }
