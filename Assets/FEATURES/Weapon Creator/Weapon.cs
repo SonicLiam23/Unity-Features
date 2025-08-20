@@ -7,14 +7,14 @@ public class Weapon : MonoBehaviour
 {
     [HideInInspector] public Character owner;
     public float damage;
-    [SerializeField] private MeleeAttack melee;
-    [SerializeField] private ProjectileSpawner projectile;
+    public MeleeAttack Melee;
+    public ProjectileSpawner Projectile;
     
     private void Awake()
     {
         owner = GetComponentInParent<Character>();
-        melee.MeleeObj = Instantiate(melee.MeleeObj, transform);
-        melee.MeleeObj.gameObject.SetActive(false);
+        Melee.MeleeObj = Instantiate(Melee.MeleeObj, transform);
+        Melee.MeleeObj.gameObject.SetActive(false);
     }
 
     public void SelectWeapon()
@@ -24,13 +24,13 @@ public class Weapon : MonoBehaviour
 
     public void Use()
     {
-        melee?.Attack(this);
-        projectile?.Fire(this);
+        Melee?.Attack(this);
+        Projectile?.Fire(this);
     }
 
     private void Update()
     {
-        melee?.OnUpdate();
-        projectile?.OnUpdate();
+        Melee?.OnUpdate();
+        Projectile?.OnUpdate();
     }
 }

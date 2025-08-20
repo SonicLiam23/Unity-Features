@@ -18,7 +18,7 @@ public class MeleeObject : MonoBehaviour
         {
             if (Owner.team == Team.NONE || Owner.team != other.team)
             {
-                other.HealthComp.Damage(Owner.HeldWeapon.damage);
+                other.HealthComp.Damage(Owner.HeldWeapon.Melee.damage);
             }
 
         }

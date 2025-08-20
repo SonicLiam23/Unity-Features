@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 /// A character entity, includes movement and health.
 /// </summary>
 [RequireComponent(typeof(MovementStateMachineController))]
-[RequireComponent(typeof(HealthBase))]
+[RequireComponent(typeof(HealthComponent))]
 public class Character : Entity
 {
     /// <summary>
@@ -19,7 +19,7 @@ public class Character : Entity
     /// </summary>
     public Vector2 LookVec { get; protected set; }
     public MovementStateMachineController MovementController { get; protected set; }
-    public HealthBase HealthComp { get; protected set; }
+    public HealthComponent HealthComp { get; protected set; }
 
     public Weapon HeldWeapon = null;
     
@@ -27,7 +27,7 @@ public class Character : Entity
     {
         base.Awake();
         MovementController = GetComponent<MovementStateMachineController>();
-        HealthComp = GetComponent<HealthBase>();
+        HealthComp = GetComponentInChildren<HealthComponent>();
 
         HeldWeapon = GetComponentInChildren<Weapon>();
 

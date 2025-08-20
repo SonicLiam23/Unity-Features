@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public interface IDamageable
@@ -5,26 +6,35 @@ public interface IDamageable
     void Damage(float dmg);
 }
 
-public abstract class HealthBase : MonoBehaviour, IDamageable
+public class HealthComponent : MonoBehaviour, IDamageable
 {
-    private readonly float maxHealth;
+    private float maxHealth;
     [SerializeField] private float currentHealth;
+    [SerializeField] protected float defence = 0.0f;
+    protected bool Invunerable => !hitbox.enabled;
 
-    public HealthBase()
+    Collider2D hitbox;
+
+    private void Awake()
     {
         maxHealth = currentHealth;
+        hitbox = GetComponent<Collider2D>();
     }
 
     public virtual void Damage(float dmg)
     {
-        dmg = Mathf.Abs(dmg);
+        if (Invunerable)
+            return;
+
+        Debug.Log("Hit");
+        dmg = Mathf.Max(dmg - defence, 1.0f);
         currentHealth -= dmg;
         if (currentHealth <= 0f)
         {
             OnDeath();
         }
-    }  
-
+    }
+    
     /// <summary>
     /// Heals this object by <paramref name="heal"/>
     /// </summary>

@@ -5,7 +5,7 @@ public class ProjectileSpawner : Attack
 {
     [Tooltip("Prefab with ProjectileObject goes here")]
     public ProjectileObject ProjectileObj;
-    public float LifeTime, TimeBetweenShots, ProjectileSpeed;
+    public float LifeTime = 3f, TimeBetweenShots, ProjectileSpeed = 20f;
     public int FireCount = 1;
     private int fired = 0;
     

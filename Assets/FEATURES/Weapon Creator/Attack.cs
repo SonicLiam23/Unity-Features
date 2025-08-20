@@ -8,7 +8,9 @@ public abstract class Attack
 {
     [HideInInspector] public Weapon weapon;
     protected bool attacking = false;
-    public float Cooldown;
+    public float Cooldown = 0.2f;
+    public float DamageMult = 1f;
+    public float damage => Mathf.Floor(weapon.damage * DamageMult);
     /// <summary>
     /// The cooldown between Starting attacking, and starting attacking again
     /// </summary>

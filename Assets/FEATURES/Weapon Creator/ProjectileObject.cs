@@ -17,6 +17,7 @@ public class ProjectileObject : MonoBehaviour
     public Rigidbody2D RBody { get; private set; }
     public TimeScaleHandler TimeScaler { get; private set; }
     public float Speed {  get; private set; }
+    private Weapon weapon;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class ProjectileObject : MonoBehaviour
     {
         Owner = newOwner;
         Speed = newSpeed;
+        weapon = Owner.HeldWeapon;
         transform.position = Owner.transform.position;
         foreach (ProjectileBehaviour behaviour in behaviours)
         {
@@ -49,7 +51,7 @@ public class ProjectileObject : MonoBehaviour
         {
             if (Owner.team == Team.NONE || Owner.team != other.team)
             {
-                other.HealthComp.Damage(Owner.HeldWeapon.damage);
+                other.HealthComp.Damage(weapon.Projectile.damage);
 
                 foreach (ProjectileBehaviour behaviour in behaviours)
                 {

@@ -6,7 +6,7 @@ public class DamageComponent : MonoBehaviour
     public float damage;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        HealthBase healthComp = collision.GetComponent<HealthBase>();
+        HealthComponent healthComp = collision.GetComponent<HealthComponent>();
         if (healthComp != null )
             healthComp.Damage(damage);
     }

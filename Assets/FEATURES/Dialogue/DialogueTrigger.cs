@@ -5,26 +5,29 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]  
 public class DialogueTrigger : MonoBehaviour
 {
-    DialogueComponent dialogue;
+    [SerializeField] GameObject dialogueObject;
+
+    DialogueComponent Dialogue => input.dialogue;
     DialogueInput input;
     
 
     private void Awake()
     {
-        input = GetComponentInChildren<DialogueInput>();
-        dialogue = input.dialogue;
-        if (dialogue == null)
+        
+        if (dialogueObject == null)
         {
-            Debug.LogWarning($"DialogueComponent not found in {gameObject.name}. You must attach a DialogueInput to this or a child.");
             this.enabled = false;
+            return;
         }
+
+        input = dialogueObject.GetComponent<DialogueInput>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            dialogue.ShowDialogue();
+            Dialogue.ShowDialogue();
             InputManager.Instance.InputActions.Menu.Enable();
             input.BeginMenu();
         }
@@ -34,7 +37,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            dialogue.HideDialogue();
+            Dialogue.HideDialogue();
             InputManager.Instance.InputActions.Menu.Disable();
         }
             
