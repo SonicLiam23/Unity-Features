@@ -11,7 +11,6 @@ public enum Direction
 /// A player character, containing unique movement that takes player input
 /// </summary>
 [RequireComponent(typeof(PlayerHealth))]
-[RequireComponent(typeof(AttackManager))]
 public class Player : Character, PlayerInputActions.IPlayerActions
 {
     
@@ -19,8 +18,6 @@ public class Player : Character, PlayerInputActions.IPlayerActions
     AttackManager attackManager;
     [SerializeField] private float verticalAttackDeadzone = 0.7f;
     [SerializeField] private float horizontalMoveDeadzone = 0.3f;
-    [SerializeField] private GameObject dot;
-    [SerializeField] private GameObject proj;
 
     protected override void Awake()
     {
@@ -101,12 +98,6 @@ public class Player : Character, PlayerInputActions.IPlayerActions
         if (context.performed)
         {
             LookVec = context.ReadValue<Vector2>().normalized;
-            dot.transform.localPosition = LookVec * 3f;
-
-            Vector2 awayDir = (dot.transform.position - transform.position).normalized;
-            float angle = Mathf.Atan2(awayDir.y, awayDir.x) * Mathf.Rad2Deg;
-            // Apply rotation only on Z-axis
-            dot.transform.rotation = Quaternion.Euler(0, 0, angle + 90f );
         }
     }
 

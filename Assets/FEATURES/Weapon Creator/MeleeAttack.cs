@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class MeleeAttack : Attack
@@ -39,6 +40,7 @@ public class MeleeAttack : Attack
             float angle = Mathf.Atan2(weapon.owner.LookVec.y, weapon.owner.LookVec.x) * Mathf.Rad2Deg;
             MeleeObj.transform.rotation = Quaternion.Euler(0, 0, angle);
             MeleeObj.transform.localPosition = weapon.owner.LookVec * distanceFromPlayer;
+            MeleeObj.OnAttack(weapon.owner);
             MeleeObj.gameObject.SetActive(true);
         }
 

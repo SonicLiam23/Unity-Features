@@ -43,7 +43,6 @@ public class ProjectileObject : MonoBehaviour
         }
     }
 
-    // Damage is dealt by DamageComponent
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Character>(out var other))
