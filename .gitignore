@@ -73,3 +73,7 @@ crashlytics-build.properties
 
 # Remove all licensed art
 /[Aa]ssets/[Aa]rt/**/*.png
+/[Aa]ssets/[Aa]rt/**/*.jpg
+/[Aa]ssets/[Aa]rt/**/*.jpeg
+/[Aa]ssets/[Aa]rt/**/*.gif
+/[Aa]ssets/[Aa]rt/**/*.psd
